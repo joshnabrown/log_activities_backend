@@ -205,6 +205,12 @@ def get_user(id):
     return jsonify(user_schema.dump(user))
 
 
+@app.route("/user/get", methods=["GET"])
+def get_all_users():
+    all_users = db.session.query(User).all()
+    return jsonify(multi_user_schema.dump(all_users))
+
+
 # ---------------- handleSubmit -----------------
 @app.route("/user/verification", methods=["POST"])
 def verification():
