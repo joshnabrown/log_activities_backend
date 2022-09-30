@@ -25,8 +25,8 @@ bcrypt = Bcrypt(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     email = db.Column(db.String(320), unique=True, nullable=False)
-    password = db.Column(db.String(320), nullable=False)
-    db_logged_in = db.Column(db.String(50))
+    password = db.Column(db.String, nullable=False)
+    db_logged_in = db.Column(db.String)
 
     def __init__(self, email, password, db_logged_in):
         self.email = email
