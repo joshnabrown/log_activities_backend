@@ -14,7 +14,7 @@ CORS(app)
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
 #     os.path.join(basedir, "app.sqlite")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql: // bmgeywbxholzje: f4dfe7e84b24755df65509129bcdcc772b738b8763f3a1a2d9476429cd100814@ec2-3-219-135-162.compute-1.amazonaws.com: 5432/d45lerprbdf1f8"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://bmgeywbxholzje: f4dfe7e84b24755df65509129bcdcc772b738b8763f3a1a2d9476429cd100814@ec2-3-219-135-162.compute-1.amazonaws.com: 5432/d45lerprbdf1f8"
 
 
 db = SQLAlchemy(app)
