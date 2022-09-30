@@ -123,7 +123,7 @@ def add_user():
     post_data = request.get_json()
     email = post_data.get('email')
     password = post_data.get('password')
-    db_logged_in = "NOT_LOGGED_IN"
+    db_logged_in = post_data.get('db_logged_in')
     possible_dup = db.session.query(User).filter(
         User.email == email).first()
 
