@@ -14,7 +14,7 @@ CORS(app)
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
 #     os.path.join(basedir, "app.sqlite")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://kghacauwujxcsc:9322b1ce9e5bc9fd5450d0de6adf3b52518cdbe659bd9794a6aac164251f60a9@ec2-34-230-153-41.compute-1.amazonaws.com:5432/d58vhoeg3oq663"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql: // bmgeywbxholzje: f4dfe7e84b24755df65509129bcdcc772b738b8763f3a1a2d9476429cd100814@ec2-3-219-135-162.compute-1.amazonaws.com: 5432/d45lerprbdf1f8"
 
 
 db = SQLAlchemy(app)
@@ -34,6 +34,15 @@ class User(db.Model):
         self.db_logged_in = db_logged_in
 
 
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "email", "password", "db_logged_in")
+
+
+user_schema = UserSchema()
+multi_user_schema = UserSchema(many=True)
+
+
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     rating = db.Column(db.String, nullable=True)
@@ -44,6 +53,15 @@ class Rating(db.Model):
         self.value = value
 
 
+class RatingSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "rating", "value")
+
+
+rating_schema = RatingSchema()
+multi_rating_schema = RatingSchema(many=True)
+
+
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String(300), nullable=False)
@@ -52,6 +70,15 @@ class Activity(db.Model):
     def __init__(self, title, user_id):
         self.title = title
         self.user_id = user_id
+
+
+class ActivitySchema(ma.Schema):
+    class Meta:
+        fields = ("id", "title", "user_id")
+
+
+activity_schema = ActivitySchema()
+multi_activity_schema = ActivitySchema(many=True)
 
 
 class ActivityRating(db.Model):
@@ -66,33 +93,6 @@ class ActivityRating(db.Model):
         self.activity_id = activity_id
         self.rating_id = rating_id
         self.user_id = user_id
-
-
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ("id", "email", "password", "db_logged_in")
-
-
-user_schema = UserSchema()
-multi_user_schema = UserSchema(many=True)
-
-
-class RatingSchema(ma.Schema):
-    class Meta:
-        fields = ("id", "rating", "value")
-
-
-rating_schema = RatingSchema()
-multi_rating_schema = RatingSchema(many=True)
-
-
-class ActivitySchema(ma.Schema):
-    class Meta:
-        fields = ("id", "title", "user_id")
-
-
-activity_schema = ActivitySchema()
-multi_activity_schema = ActivitySchema(many=True)
 
 
 class ActivityRatingSchema(ma.Schema):
@@ -120,6 +120,9 @@ def add_activity_rating():
 
 @app.route("/user/add", methods=['POST'])           # ADD ONE USER
 def add_user():
+    if request.content_type != 'application/json':
+        return jsonify("Error try again this time with JSON Simpleton!")
+
     post_data = request.get_json()
     email = post_data.get('email')
     password = post_data.get('password')
@@ -141,6 +144,9 @@ def add_user():
 
 @app.route("/activity/add", methods={'POST'})           # ADD ONE ACTIVITY
 def add_activity():
+    if request.content_type != 'application/json':
+        return jsonify("Error try again this time with JSON Simpleton!")
+
     post_data = request.get_json()
     title = post_data.get('title')
     user_id = post_data.get('user_id')
