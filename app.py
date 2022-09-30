@@ -124,11 +124,11 @@ def add_user():
     email = post_data.get('email')
     password = post_data.get('password')
     db_logged_in = post_data.get('db_logged_in')
-    possible_dup = db.session.query(User).filter(
-        User.email == email).first()
+    # possible_dup = db.session.query(User).filter(
+    #     User.email == email).first()
 
-    if possible_dup is not None:
-        return jsonify('Error: that email already exists.')
+    # if possible_dup is not None:
+    #     return jsonify('Error: that email already exists.')
 
     encrypted_password = bcrypt.generate_password_hash(
         password).decode('utf-8')
