@@ -15,7 +15,7 @@ CORS(app)
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
 #     os.path.join(basedir, "app.sqlite")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "config.api_secret"
+app.config["SQLALCHEMY_DATABASE_URI"] = config.api_secret
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
